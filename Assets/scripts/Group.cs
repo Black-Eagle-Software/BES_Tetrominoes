@@ -23,7 +23,7 @@ namespace Assets.scripts {
 
         // Use this for initialization
         void Start() {
-            if ( !IsValidGridPosition() ) {
+            if ( ShouldCheckPositionValid && !IsValidGridPosition() ) {
                 Debug.Log( "Game over!" );
                 Destroy( gameObject );
             }
@@ -34,7 +34,7 @@ namespace Assets.scripts {
             if ( !isDownKeyPressed ) {
                 fallTimeStep = 0.5f;
             }
-            if ( shouldReceiveInputs ) {
+            if ( ShouldCheckPositionValid && shouldReceiveInputs ) {
                 MoveOnKeyPress( KeyCode.LeftArrow, new Vector3( -1, 0, 0 ) );
                 MoveOnKeyPress( KeyCode.RightArrow, new Vector3( 1, 0, 0 ) );
 
@@ -60,7 +60,7 @@ namespace Assets.scripts {
         }
 
         void FixedUpdate() {
-            if ( shouldReceiveInputs && Time.time - lastFall >= fallTimeStep ) {
+            if ( ShouldCheckPositionValid && shouldReceiveInputs && Time.time - lastFall >= fallTimeStep ) {
                 MoveDown();
 
                 lastFall = Time.time;
@@ -99,7 +99,7 @@ namespace Assets.scripts {
             }
         }
 
-        bool IsValidGridPosition() {
+        bool IsValidGridPosition() {            
             foreach ( Transform child in transform ) {
                 var gi = Grid.Instance;
                 var v = gi.RoundVector2( child.position );
@@ -142,7 +142,8 @@ namespace Assets.scripts {
         bool shouldReceiveInputs = true;
         float lastFall = 0;
         float fallTimeStep;
-        float originalFallTimeStep;
+
+        public bool ShouldCheckPositionValid = true;
 
         #endregion
 

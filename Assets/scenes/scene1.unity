@@ -229,7 +229,8 @@ MonoBehaviour:
   - {fileID: 144244, guid: 372697bcf93690041a333fe6d5b1a159, type: 2}
   - {fileID: 141220, guid: d2a17e90d0915a74098ff3645e00ecde, type: 2}
   - {fileID: 178270, guid: 2a251af4fcdaab24c817c0a8d0a53957, type: 2}
-  SpawnLocation: {x: 4, y: 15}
+  GridSpawnLocation: {x: 4, y: 15}
+  NextSpawnLocation: {x: 12, y: 12}
 --- !u!1 &1843161728
 GameObject:
   m_ObjectHideFlags: 0
