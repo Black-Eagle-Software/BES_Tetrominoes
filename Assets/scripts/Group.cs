@@ -50,6 +50,26 @@ namespace Assets.scripts {
                 if ( Input.GetKeyDown( KeyCode.DownArrow ) ) {
                     MoveDown();
                 }
+                /*if ( Input.GetKeyDown( KeyCode.Space ) ) {
+                    //move all the way to the bottom
+                    transform.position += new Vector3( 0, -Grid.Instance.Height, 0 );
+
+                    if ( IsValidGridPosition() ) {
+                        UpdateGrid();
+                    } else {
+                        //try and nudge it back up until it's valid
+                        do {
+                            transform.position += new Vector3( 0, 1, 0 );
+                        } while ( !IsValidGridPosition() );
+                        UpdateGrid();
+                        Grid.Instance.DeleteFullRows();
+
+                        SpawnManager.Instance.SpawnNext();
+
+                        //enabled = false;
+                        shouldReceiveInputs = false;
+                    }
+                }*/
                 /*if ( Input.GetKey( KeyCode.DownArrow ) ) {
                     isDownKeyPressed = true;
                     fallTimeStep = 0.5f;

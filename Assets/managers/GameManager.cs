@@ -42,6 +42,7 @@ namespace Assets.managers {
             Level = 0;
             LevelT.text = Level.ToString();
             sm.Difficulty = Level;
+            _levelLinesOrig = LevelLinesReqd;
 
             _shouldIncrementScore = false;
             _linesCount = 0;
@@ -93,13 +94,18 @@ namespace Assets.managers {
                         break;
                 }
                 IncrementText( Lines, _linesCount );
+                LevelLinesReqd -= _linesCount;
                 _linesCount = 0;
                 _shouldIncrementScore = false;
             }
 
-            if ( int.Parse( Lines.text ) > 0 && int.Parse( Lines.text ) % 10 == 0 ) {
-                Level++;
-                SpawnManager.Instance.Difficulty = Level;
+            if ( int.Parse( Lines.text ) > 0 || LevelT.text != Level.ToString() ) {
+                if ( LevelLinesReqd == 0 ) {
+                    Level++;
+                    SpawnManager.Instance.Difficulty = Level;
+                    LevelLinesReqd = _levelLinesOrig;
+                }
+                LevelT.text = Level.ToString();
             }
         }
 
@@ -145,6 +151,7 @@ namespace Assets.managers {
         private bool _shouldTimeSpecialText;
         private float _specialTextTime;
         private float _specialTextTimeout = 3f;
+        private int _levelLinesOrig;
 
         public Text Istats;
         public Text Jstats;
@@ -160,6 +167,7 @@ namespace Assets.managers {
         public Text LinesSpecial;
 
         public int Level;
+        public int LevelLinesReqd = 10;
 
         #endregion
 
