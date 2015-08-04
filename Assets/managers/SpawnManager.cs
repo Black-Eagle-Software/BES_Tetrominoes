@@ -24,8 +24,7 @@ namespace Assets.managers {
 
         // Use this for initialization
         void Start() {
-            SpawnNext();
-            SpawnNext();    //hacky-hack to populate the nextgroup slot in the beginning
+            
         }
 
         // Update is called once per frame
@@ -55,6 +54,11 @@ namespace Assets.managers {
                 _hasNextGroup = false;
                 SpawnNext();
             }
+        }
+
+        public void StartSpawning() {
+            SpawnNext();
+            SpawnNext();    //hacky-hack to populate the nextgroup slot in the beginning
         }
 
         protected virtual void OnSpawnedGroup( GroupType t ) {

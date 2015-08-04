@@ -45,6 +45,8 @@ namespace Assets.managers {
 
             _shouldIncrementScore = false;
             _linesCount = 0;
+
+            sm.StartSpawning();
         }
 
         private void DidDeleteRow() {
@@ -60,6 +62,11 @@ namespace Assets.managers {
         }
 
         void FixedUpdate() {
+            if ( _shouldTimeSpecialText && Time.time - _specialTextTime >= _specialTextTimeout ) {
+                LinesSpecial.text = "";
+                _specialTextTime = Time.time;
+            }
+
             if ( _shouldIncrementScore ) {
                 LinesSpecial.text = "";
                 switch ( _linesCount ) {
@@ -69,14 +76,20 @@ namespace Assets.managers {
                     case 2:
                         IncrementText( Score, 100 * ( Level + 1 ) );
                         LinesSpecial.text = "DOUBLE!";
+                        _shouldTimeSpecialText = true;
+                        _specialTextTime = Time.time;
                         break;
                     case 3:
                         IncrementText( Score, 300 * ( Level + 1 ) );
                         LinesSpecial.text = "TRIPLE!!";
+                        _shouldTimeSpecialText = true;
+                        _specialTextTime = Time.time;
                         break;
                     case 4:
                         IncrementText( Score, 1200 * ( Level + 1 ) );
                         LinesSpecial.text = "QUADRUPLE!!!";
+                        _shouldTimeSpecialText = true;
+                        _specialTextTime = Time.time;
                         break;
                 }
                 IncrementText( Lines, _linesCount );
@@ -129,6 +142,9 @@ namespace Assets.managers {
 
         private bool _shouldIncrementScore;
         private int _linesCount;
+        private bool _shouldTimeSpecialText;
+        private float _specialTextTime;
+        private float _specialTextTimeout = 3f;
 
         public Text Istats;
         public Text Jstats;
