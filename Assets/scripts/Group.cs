@@ -31,9 +31,9 @@ namespace Assets.scripts {
 
         // Update is called once per frame
         void Update() {
-            if ( !isDownKeyPressed ) {
-                fallTimeStep = 0.5f;
-            }
+            /*if ( !isDownKeyPressed ) {
+                FallTimeStep = 0.5f;
+            }*/
             if ( ShouldCheckPositionValid && shouldReceiveInputs ) {
                 MoveOnKeyPress( KeyCode.LeftArrow, new Vector3( -1, 0, 0 ) );
                 MoveOnKeyPress( KeyCode.RightArrow, new Vector3( 1, 0, 0 ) );
@@ -60,7 +60,7 @@ namespace Assets.scripts {
         }
 
         void FixedUpdate() {
-            if ( ShouldCheckPositionValid && shouldReceiveInputs && Time.time - lastFall >= fallTimeStep ) {
+            if ( ShouldCheckPositionValid && shouldReceiveInputs && Time.time - lastFall >= FallTimeStep ) {
                 MoveDown();
 
                 lastFall = Time.time;
@@ -99,7 +99,7 @@ namespace Assets.scripts {
             }
         }
 
-        bool IsValidGridPosition() {            
+        bool IsValidGridPosition() {
             foreach ( Transform child in transform ) {
                 var gi = Grid.Instance;
                 var v = gi.RoundVector2( child.position );
@@ -141,8 +141,8 @@ namespace Assets.scripts {
         bool isDownKeyPressed = false;
         bool shouldReceiveInputs = true;
         float lastFall = 0;
-        float fallTimeStep;
 
+        public float FallTimeStep = 1f;
         public bool ShouldCheckPositionValid = true;
         public GroupType Type;
 

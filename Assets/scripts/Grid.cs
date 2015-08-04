@@ -50,8 +50,9 @@ namespace Assets.scripts {
         public void DeleteRow(int y ) {
             for ( int x = 0; x < Width; x++ ) {
                 Destroy( GameGrid[ x, y ].gameObject );
-                GameGrid[ x, y ] = null;
+                GameGrid[ x, y ] = null;                
             }
+            OnDidDeleteRow();
         }
 
         public void DecreaseRow(int y ) {
@@ -92,6 +93,13 @@ namespace Assets.scripts {
             }
         }
 
+        protected virtual void OnDidDeleteRow() {
+            var handler = this.DidDeleteRow;
+            if ( handler != null ) {
+                handler( );
+            }
+        }
+
         #endregion
 
 
@@ -100,6 +108,9 @@ namespace Assets.scripts {
         public int Width = 10;
         public int Height = 20;
         public Transform[, ] GameGrid;
+
+        public delegate void DeletedRow();
+        public event DeletedRow DidDeleteRow;
 
         #endregion
 
