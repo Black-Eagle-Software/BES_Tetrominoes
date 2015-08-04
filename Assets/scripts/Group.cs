@@ -144,6 +144,7 @@ namespace Assets.scripts {
         float fallTimeStep;
 
         public bool ShouldCheckPositionValid = true;
+        public GroupType Type;
 
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.scripts;
+using System;
 
 namespace Assets.managers {
     //modified from http://noobtuts.com/unity/2d-tetris-game
@@ -38,15 +39,27 @@ namespace Assets.managers {
 
         public void SpawnNext() {
             if ( !_hasNextGroup ) {
-                var i = Random.Range( 0, Groups.Length );
+                var i = UnityEngine.Random.Range( 0, Groups.Length );
                 _nextGroup = ( GameObject )Instantiate( Groups[ i ], NextSpawnLocation, Quaternion.identity );
-                _nextGroup.GetComponent<Group>().ShouldCheckPositionValid = false;
+                var ngg = _nextGroup.GetComponent<Group>();
+                ngg.ShouldCheckPositionValid = false;
+                var v = (GroupType[])Enum.GetValues( typeof( GroupType ) );
+                ngg.Type = v[i];
                 _hasNextGroup = true;
             } else {
                 _nextGroup.transform.position = GridSpawnLocation;
-                _nextGroup.GetComponent<Group>().ShouldCheckPositionValid = true;
+                var ngg = _nextGroup.GetComponent<Group>();
+                ngg.ShouldCheckPositionValid = true;
+                OnSpawnedGroup( ngg.Type );
                 _hasNextGroup = false;
                 SpawnNext();
+            }
+        }
+
+        protected virtual void OnSpawnedGroup(GroupType t ) {
+            var handler = this.SpawnedGroup;
+            if ( handler != null ) {
+                handler( t );
             }
         }
 
@@ -61,6 +74,9 @@ namespace Assets.managers {
         public GameObject[] Groups;
         public Vector2 GridSpawnLocation;        
         public Vector2 NextSpawnLocation;
+
+        public delegate void SpawnGroup( GroupType t );
+        public event SpawnGroup SpawnedGroup;
 
         #endregion
 
